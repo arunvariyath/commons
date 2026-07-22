@@ -618,7 +618,7 @@ fun Activity.openPathIntent(
             setDataAndType(newUri, mimeType)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-            if (applicationId == "org.fossify.gallery" || applicationId == "org.fossify.gallery.debug") {
+            if (applicationId == "org.fossify.gallery" || applicationId == "org.fossify.gallery.debug" || applicationId == "com.arvapps.gallery" || applicationId == "com.arvapps.gallery.debug") {
                 putExtra(IS_FROM_GALLERY, true)
             }
 
@@ -1754,47 +1754,21 @@ fun BaseSimpleActivity.getAlarmSounds(type: Int, callback: (ArrayList<AlarmSound
 }
 
 fun BaseSimpleActivity.showModdedAppWarning() {
-    val label =
-        "You are using a fake version of the app. For your own safety " +
-                "download the original one from www.fossify.org. Thanks"
-    ConfirmationDialog(
-        activity = this,
-        message = label,
-        positive = R.string.ok,
-        negative = 0
-    ) {
-        launchViewIntent(DEVELOPER_PLAY_STORE_URL)
-    }
+    // Patched: removed fake version check for forks
 }
 
 fun Activity.checkAppSideloading(): Boolean {
-    val isSideloaded = when (baseConfig.appSideloadingStatus) {
-        SIDELOADING_TRUE -> true
-        SIDELOADING_FALSE -> false
-        else -> isAppSideloaded()
-    }
-
-    baseConfig.appSideloadingStatus = if (isSideloaded) SIDELOADING_TRUE else SIDELOADING_FALSE
-    if (isSideloaded) {
-        showSideloadingDialog()
-    }
-
-    return isSideloaded
+    // Patched: removed sideloading check for forks
+    return false
 }
 
 fun Activity.isAppSideloaded(): Boolean {
-    return try {
-        getDrawable(R.drawable.ic_camera_vector)
-        false
-    } catch (e: Exception) {
-        true
-    }
+    // Patched: removed sideloading check for forks
+    return false
 }
 
 fun Activity.showSideloadingDialog() {
-    AppSideloadedDialog(this) {
-        finish()
-    }
+    // Patched: removed sideloading check for forks
 }
 
 fun Activity.onApplyWindowInsets(callback: (WindowInsetsCompat) -> Unit) {
